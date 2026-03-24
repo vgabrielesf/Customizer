@@ -2,7 +2,7 @@
 <html>
 <head>
   <meta charset="UTF-8">
-  <title>Boat Customizer Pro</title>
+  <title>Boat Customizer Pro - Edição Teka</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
   
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
@@ -30,7 +30,6 @@
         max-height: 80vh; overflow-y: auto; padding-right: 10px;
     }
 
-    /* Botões com Hover Preto Moderno */
     .btn-ui {
       padding: 12px 18px; border-radius: 10px; border: none;
       background: white; color: #333; font-size: 14px;
@@ -58,7 +57,6 @@
     }
     .color-picker.show { display: grid; }
     
-    /* Quadrados com contorno cinza e preto no hover */
     .color-box { 
         width: 45px; height: 45px; border-radius: 8px; 
         cursor: pointer; 
@@ -87,41 +85,43 @@
 </head>
 <body>
 
-  <div id="info">Carregando Modelo...</div>
+  <div id="info">Carregando Modelo e Texturas...</div>
 
   <div class="controls-container">
     <button id="toggleBg" class="btn-ui"><span class="material-symbols-outlined">routine</span> Alterar Fundo</button>
     
     <button id="btnSofas" class="btn-ui"><span class="material-symbols-outlined">chair</span> Cores do Estofado</button>
     <div id="pickerSofas" class="color-picker">
-        <div class="color-box" style="background: #f5f5f0;" data-color="#f5f5f0"></div> <div class="color-box" style="background: #e3dac9;" data-color="#e3dac9"></div> 
+        <div class="color-box" style="background: #f5f5f0;" data-color="#f5f5f0"></div> 
+        <div class="color-box" style="background: #e3dac9;" data-color="#e3dac9"></div> 
         <div class="color-box" style="background: #d2b48c;" data-color="#d2b48c"></div> 
         <div class="color-box" style="background: #bc987e;" data-color="#bc987e"></div> 
         <div class="color-box" style="background: #8e735b;" data-color="#8e735b"></div> 
         <div class="color-box" style="background: #4b3621;" data-color="#4b3621"></div> 
         <div class="color-box" style="background: #c0c0c0;" data-color="#c0c0c0"></div> 
         <div class="color-box" style="background: #708090;" data-color="#708090"></div> 
-        <div class="color-box" style="background: #2f4f4f;" data-color="#2f4f4f"></div> 
-        <div class="color-box" style="background: #191970;" data-color="#191970"></div> 
-        <div class="color-box" style="background: #000000;" data-color="#000000"></div> 
-        <div class="color-box" style="background: #004d4d;" data-color="#004d4d"></div> <div class="custom-label">COR PERSONALIZADA:</div>
+        <div class="custom-label">COR PERSONALIZADA:</div>
         <input type="color" id="customSofas" class="input-custom" value="#ffffff">
     </div>
 
     <button id="btnExterno" class="btn-ui"><span class="material-symbols-outlined">directions_boat</span> Cores do Casco</button>
     <div id="pickerExterno" class="color-picker">
-        <div class="color-box" style="background: #f0f8ff;" data-color="#f0f8ff"></div> <div class="color-box" style="background: #e5e4e2;" data-color="#e5e4e2"></div>
+        <div class="color-box" style="background: #f0f8ff;" data-color="#f0f8ff"></div> 
         <div class="color-box" style="background: #002366;" data-color="#002366"></div>
-        <div class="color-box" style="background: #001233;" data-color="#001233"></div>
-        <div class="color-box" style="background: #1c3d5a;" data-color="#1c3d5a"></div>
-        <div class="color-box" style="background: #5a5e6b;" data-color="#5a5e6b"></div>
-        <div class="color-box" style="background: #2c3e50;" data-color="#2c3e50"></div>
         <div class="color-box" style="background: #1a1a1a;" data-color="#1a1a1a"></div>
-        <div class="color-box" style="background: #2d5a27;" data-color="#2d5a27"></div>
         <div class="color-box" style="background: #4a0404;" data-color="#4a0404"></div>
-        <div class="color-box" style="background: #daa520;" data-color="#daa520"></div>
-        <div class="color-box" style="background: #464e51;" data-color="#464e51"></div> <div class="custom-label">COR PERSONALIZADA:</div>
+        <div class="custom-label">COR PERSONALIZADA:</div>
         <input type="color" id="customExterno" class="input-custom" value="#ffffff">
+    </div>
+
+    <button id="btnTeka" class="btn-ui"><span class="material-symbols-outlined">texture</span> Cor da Teka</button>
+    <div id="pickerTeka" class="color-picker">
+        <div class="color-box" style="background: #a57c5a;" data-color="#a57c5a"></div> 
+        <div class="color-box" style="background: #8b5a2b;" data-color="#8b5a2b"></div>
+        <div class="color-box" style="background: #5d4037;" data-color="#5d4037"></div>
+        <div class="color-box" style="background: #ffffff;" data-color="#ffffff"></div>
+        <div class="custom-label">COR PERSONALIZADA:</div>
+        <input type="color" id="customTeka" class="input-custom" value="#ffffff">
     </div>
   </div>
 
@@ -152,16 +152,23 @@
     const controls = new OrbitControls(camera, renderer.domElement);
     controls.enableDamping = true;
 
+    // Luzes
     scene.add(new THREE.AmbientLight(0xffffff, 0.8));
     scene.add(new THREE.HemisphereLight(0xffffff, 0x444444, 1.0));
     const keyLight = new THREE.DirectionalLight(0xffffff, 1.2); 
     keyLight.position.set(5, 10, 7);
     scene.add(keyLight);
-    const fillLight = new THREE.DirectionalLight(0xffffff, 0.7);
-    fillLight.position.set(-5, 5, 2);
-    scene.add(fillLight);
 
+    // Variáveis de Objetos
     let objSofas, objExterno;
+    let objsTeka = []; // Array para TEKA1, TEKA2, TEKA3
+
+    // Carregar Textura da Teka
+    const textureLoader = new THREE.TextureLoader();
+    const tekaTexture = textureLoader.load('Teak_flex_albedo.png', (tex) => {
+        tex.flipY = false; // Ajuste padrão para GLTF
+        tex.encoding = THREE.sRGBEncoding;
+    });
 
     function applyColor(object, hex) {
         if (!object) return;
@@ -173,13 +180,36 @@
         });
     }
 
+    // Função especial para as 3 Tekas juntas
+    function applyTekaColor(hex) {
+        objsTeka.forEach(obj => {
+            obj.traverse((child) => {
+                if (child.isMesh) {
+                    child.material.color.set(hex);
+                }
+            });
+        });
+    }
+
     const loader = new GLTFLoader();
     loader.load('model7.glb', (gltf) => {
       const model = gltf.scene;
       model.traverse((child) => {
+        // Mapeamento por nome
         if (child.name === "arch48_003_obj_05") objSofas = child;
         if (child.name === "arch48_003_obj_04") objExterno = child;
+        
+        // Identifica as Tekas
+        if (child.name === "TEKA1" || child.name === "TEKA2" || child.name === "TEKA3") {
+            objsTeka.push(child);
+            if (child.isMesh) {
+                child.material = child.material.clone();
+                child.material.map = tekaTexture; // Aplica a textura de madeira
+                child.material.needsUpdate = true;
+            }
+        }
       });
+
       const box = new THREE.Box3().setFromObject(model);
       const center = box.getCenter(new THREE.Vector3());
       model.position.sub(center);
@@ -187,25 +217,35 @@
       document.getElementById('info').style.display = 'none';
     });
 
-    document.getElementById('btnSofas').onclick = () => {
-        document.getElementById('pickerSofas').classList.toggle('show');
-        document.getElementById('pickerExterno').classList.remove('show');
-    };
-    document.getElementById('btnExterno').onclick = () => {
-        document.getElementById('pickerExterno').classList.toggle('show');
-        document.getElementById('pickerSofas').classList.remove('show');
-    };
+    // Lógica de menus (abrir/fechar)
+    document.getElementById('btnSofas').onclick = () => toggleMenu('pickerSofas');
+    document.getElementById('btnExterno').onclick = () => toggleMenu('pickerExterno');
+    document.getElementById('btnTeka').onclick = () => toggleMenu('pickerTeka');
+
+    function toggleMenu(id) {
+        const menus = ['pickerSofas', 'pickerExterno', 'pickerTeka'];
+        menus.forEach(m => {
+            if(m === id) document.getElementById(m).classList.toggle('show');
+            else document.getElementById(m).classList.remove('show');
+        });
+    }
     
+    // Clique nas cores (Genérico)
     document.querySelectorAll('.color-box').forEach(box => {
         box.onclick = (e) => {
             const color = e.target.getAttribute('data-color');
             const parentId = e.target.parentElement.id;
-            applyColor(parentId === 'pickerSofas' ? objSofas : objExterno, color);
+            
+            if (parentId === 'pickerSofas') applyColor(objSofas, color);
+            if (parentId === 'pickerExterno') applyColor(objExterno, color);
+            if (parentId === 'pickerTeka') applyTekaColor(color);
         };
     });
 
+    // Inputs personalizados
     document.getElementById('customSofas').oninput = (e) => applyColor(objSofas, e.target.value);
     document.getElementById('customExterno').oninput = (e) => applyColor(objExterno, e.target.value);
+    document.getElementById('customTeka').oninput = (e) => applyTekaColor(e.target.value);
     
     document.getElementById('toggleBg').onclick = () => {
       isDark = !isDark;
